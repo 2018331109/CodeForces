@@ -1,0 +1,88 @@
+E. Data Structures Fan
+
+STATEMENT
+You are given an array of integers a1,a2,…,an, as well as a binary string† s consisting of n characters.
+
+Augustin is a big fan of data structures. Therefore, he asked you to implement a data structure 
+that can answer q queries. There are two types of queries:
+
+   - "1 l r" (1≤l≤r≤n) — replace each character si for l≤i≤r with its opposite. 
+    That is, replace all 0 with 1 and all 1 with 0.
+   - "2 g" (g∈{0,1}) — calculate the value of the bitwise XOR of the numbers ai for all indices i such that 
+    si=g. Note that the XOR of an empty set of numbers is considered to be equal to 0.
+
+SOLUTION
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long int
+#define pb push_back
+#define no cout<<"NO"<<endl;
+#define yes cout<<"YES"<<endl;
+#define neg cout<<-1<<endl;
+
+int mod = 1e9+7;
+int test;
+
+void solve()
+{
+    int n;
+    cin>>n;
+    int a[n], b[2]= {0};
+    char c;
+    for(int i=0; i<n; i++)
+    {
+        cin>>a[i];
+    }
+    for(int i=0; i<n; i++)
+    {
+        cin>>c;
+        if(c=='1')
+        {
+            b[1]^=a[i];
+        }
+        else
+        {
+            b[0]^=a[i];
+        }
+    }
+
+    int q;
+    cin>>q;
+    for(int i=0; i<q; i++)
+    {
+        int x;
+        cin>>x;
+        if(x==2)
+        {
+            int v;
+            cin>>v;
+            cout<<b[v]<<" ";
+        }
+        else
+        {
+            int l, r;
+            cin>>l>>r;
+            l--;
+            while(l<r)
+            {
+                b[0]^=a[l];
+                b[1]^=a[l];
+                l++;
+            }
+        }
+    }
+
+    cout<<endl;
+}
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int t = 1;
+    cin >> t;
+    for(test=1; test<=t; test++)
+    {
+        solve();
+    }
+}
