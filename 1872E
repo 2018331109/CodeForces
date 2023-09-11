@@ -26,53 +26,58 @@ int test;
 void solve()
 {
     int n;
-    cin>>n;
-    int a[n], b[2]= {0};
-    char c;
-    for(int i=0; i<n; i++)
+    cin >> n;
+    int a[n + 1];
+    vector<int> b(2, 0); // Ucing a vector for b0 and b1
+    a[0] = 0;
+
+    for (int i = 1; i <= n; i++)
     {
-        cin>>a[i];
+        cin >> a[i];
     }
-    for(int i=0; i<n; i++)
+
+    string c;
+    cin >> c;
+    for (int i = 0; i < n; i++)
     {
-        cin>>c;
-        if(c=='1')
+        if (c[i] == '0')
         {
-            b[1]^=a[i];
+            b[0] ^= a[i + 1];
         }
         else
         {
-            b[0]^=a[i];
+            b[1] ^= a[i + 1];
         }
+        a[i + 1] ^= a[i];
     }
 
     int q;
-    cin>>q;
-    for(int i=0; i<q; i++)
+    cin >> q;
+    while (q--)
     {
-        int x;
-        cin>>x;
-        if(x==2)
+        int t, l, r;
+        cin >> t;
+        if (t == 1)
         {
-            int v;
-            cin>>v;
-            cout<<b[v]<<" ";
+            cin >> l >> r;
+            b[0] ^= (a[r] ^ a[l - 1]);
+            b[1] ^= (a[r] ^ a[l - 1]);
         }
         else
         {
-            int l, r;
-            cin>>l>>r;
-            l--;
-            while(l<r)
+            cin >> l;
+            if (l == 0)
             {
-                b[0]^=a[l];
-                b[1]^=a[l];
-                l++;
+                cout << b[0] << " ";
+            }
+            else
+            {
+                cout << b[1] << " ";
             }
         }
     }
 
-    cout<<endl;
+    cout << endl;
 }
 signed main()
 {
