@@ -1,0 +1,86 @@
+F. Money Trees
+
+STATEMENT
+Luca is in front of a row of n trees. The i-th tree has ai fruit and height hi.
+He wants to choose a contiguous subarray of the array [hl,hl+1,…,hr]
+such that for each i (l≤i<r), hi is divisible† by hi+1. 
+He will collect all the fruit from each of the trees in the subarray (that is, he will collect al+al+1+⋯+ar fruits). 
+However, if he collects more than k fruits in total, he will get caught.
+What is the maximum length of a subarray Luca can choose so he doesn't get caught?
+
+SOLUTION
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define pb push_back
+#define no cout<<"NO"<<endl;
+#define yes cout<<"YES"<<endl;
+#define neg cout<<-1<<endl;
+
+int md = 1e9+7;
+
+void solve()
+{
+    int n, k;
+    cin>>n>>k;
+    int a[n], h[n], s[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>a[i];
+    }
+    for(int i=0; i<n; i++)
+    {
+        cin>>h[i];
+    }
+
+
+    int l=0, r=0, ans=0, total=a[0];
+    while(r<n)
+    {
+        if(total<=k)
+        {
+            ans=max(ans, r-l+1);
+        }
+
+        if(r+1<n && h[r]%h[r+1]==0)
+        {
+            r++;
+            total+=a[r];
+            if(total<=k)
+            {
+                ans=max(ans, r-l+1);
+            }
+            else
+            {
+                while(total>k && l<r)
+                {
+                    total-=a[l];
+                    l++;
+                }
+            }
+        }
+        else
+        {
+            r++;
+            total=a[r];
+            l=r;
+        }
+    }
+    cout<<ans<<endl;
+
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int test=1;
+    cin>>test;
+    for(int t=1; t<=test; t++)
+    {
+        solve();
+    }
+
+}
