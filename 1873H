@@ -1,0 +1,100 @@
+H. Mad City
+
+STATEMENT
+Marcel and Valeriu are in the mad city, which is represented by n buildings with n two-way roads between them.
+Marcel and Valeriu start at buildings a and b respectively. 
+Marcel wants to catch Valeriu, in other words, be in the same building as him or meet on the same road.
+During each move, they choose to go to an adjacent building of their current one or stay in the same building.
+Because Valeriu knows Marcel so well, Valeriu can predict where Marcel will go in the next move. 
+Valeriu can use this information to make his move. They start and end the move at the same time.
+It is guaranteed that any pair of buildings is connected by some path and there is at most one road between 
+any pair of buildings. Assuming both players play optimally, 
+answer if Valeriu has a strategy to indefinitely escape Marcel.
+
+SOLUTION
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+#define pb push_back
+const int mod = 1e9 + 7;
+
+int dfs(int cur, int par, vector<bool>& vis,  vector<int> adj[])
+{
+    if (vis[cur])
+    {
+        return cur;
+    }
+    vis[cur] = true;
+    int res=-1;
+    for (auto it : adj[cur])
+    {
+        if (it == par)
+        {
+            continue;
+        }
+        if(vis[it])
+        {
+            return it;
+        }
+        int res = dfs(it, cur, vis, adj);
+        if (res != -1)
+        {
+            return res;
+        }
+    }
+    return res;
+}
+
+void solve()
+{
+    int n, a, b;
+    cin >> n >> a >> b;
+    a--, b--;
+    vector<int> adj[n];
+    vector<bool> vis(n, false);
+    for (int i = 0; i < n; i++)
+    {
+        int u, v;
+        cin >> u >> v;
+        u--, v--;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+
+    int entry = dfs(b, -1, vis, adj);
+
+    //cout << entry << endl;
+    vector<int> dis(n, -1);
+    dis[entry] = 0;
+    queue<int> q;
+    q.push(entry);
+
+    while (!q.empty())
+    {
+        int top = q.front();
+        q.pop();
+        for (auto it : adj[top])
+        {
+            if (dis[it] == -1)
+            {
+                dis[it] = dis[top] + 1;
+                q.push(it);
+            }
+        }
+    }
+
+    cout << (dis[b] < dis[a] ? "YES\n" : "NO\n");
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        solve();
+    }
+}
