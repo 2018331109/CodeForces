@@ -1,0 +1,83 @@
+STATEMENT
+You are given an array a consisting of n
+positive integers. You can perform the following operation on it:
+Choose a pair of elements ai and aj (1≤i,j≤n and i≠j );
+Choose one of the divisors of the integer ai, i.e., an integer x such that aimodx=0;
+Replace ai with aix and aj with aj⋅x. 
+Determine whether it is possible to make all elements in the array the same by applying the operation 
+a certain number of times (possibly zero).
+For example, let's consider the array a = [100,2,50,10,1] with 5  elements. Perform two operations on it:
+Choose a3=50 and a2=2, x=5. Replace a3 with a3x=505=10, and a2 with a2⋅x=2⋅5=10. 
+The resulting array is a = [100,10,10,10,1];
+Choose a1=100 and a5=1, x=10. Replace a1 with a1x=10010=10, and a5 with a5⋅x=1⋅10=10. 
+The resulting array is a = [10,10,10,10,10]. 
+After performing these operations, all elements in the array a become equal to 10.
+
+SOLUTION
+C++
+#include<bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout<<"Yes"<<endl;
+#define no cout<<"No"<<endl;
+#define neg cout<<-1<<end;
+#define pb push_back
+
+void solve()
+{
+    int n;
+    cin>>n;
+    vector<int>v(n);
+    for(int i=0; i<n; i++)
+    {
+        cin>>v[i];
+    }
+    map<int, int>mp;
+    for(auto it:v)
+    {
+        for(int i=2; i<=sqrt(it); i++)
+        {
+            while(it%i==0)
+            {
+                mp[i]++;
+                it/=i;
+            }
+        }
+        if(it>1)
+        {
+            mp[it]++;
+        }
+    }
+
+    int f=1;
+    for(auto [x, y]:mp)
+    {
+        f&=(y%n==0);
+    }
+    if(f)
+    {
+        yes;
+    }
+    else
+    {
+        no;
+    }
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
