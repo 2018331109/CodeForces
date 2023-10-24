@@ -1,0 +1,68 @@
+E. Look Back
+
+You are given an array of integers a1,a2,…,an.
+You need to make it non-decreasing with the minimum number of operations. In one operation, 
+you do the following: Choose an index 1≤i≤n, Set ai=ai⋅2. An array b1,b2,…,bn is non-decreasing if bi≤bi+1 for all 1≤i<n.
+
+SOLUTION
+
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+int mod = 1e9 + 7;
+
+const int INF = 1e18;
+
+void solve()
+{
+    int n;
+    cin >> n;
+    int a[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    int cnt = 0;
+    int ans = 0;
+    for (int i = 1; i < n; i++)
+    {
+        // Calculate the power of 2 needed to make a[i-1] non-decreasing with a[i].
+        int x = ceil(log2((long double)a[i - 1] / a[i]));
+
+        // Ensure x is at least 0 to avoid negative values.
+        //x = max(x, (int)0);
+
+        // Add x to the count of operations.
+        cnt += x;
+        cnt=max(cnt, (int)0);
+        //cout<<x<<" "<<cnt<<endl;
+
+        // Accumulate the total number of operations.
+        ans += cnt;
+    }
+
+    cout << ans << endl;
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
