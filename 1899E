@@ -1,0 +1,76 @@
+E. Queue Sort
+
+STATEMENT
+Vlad found an array a of n integers and decided to sort it in non-decreasing order. To do this, 
+Vlad can apply the following operation any number of times:
+    Extract the first element of the array and insert it at the end;
+    Swap that element with the previous one until it becomes the first or until it becomes strictly greater 
+    than the previous one. 
+Note that both actions are part of the operation, and for one operation, you must apply both actions.
+For example, if you apply the operation to the array [4,3,1,2,6,4], it will change as follows:
+[4,3,1,2,6,4];
+[3,1,2,6,4,4];
+[3,1,2,6,4,4];
+[3,1,2,4,6,4].
+Vlad doesn't have time to perform all the operations, so he asks you to determine the minimum number of 
+operations required to sort the array or report that it is impossible.
+
+SOLUTION
+
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+int mod = 1e9 + 7;
+int md = 998244353;
+
+const int INF = 1e18;
+
+void solve()
+{
+    int n;
+    cin>>n;
+    int a[n];
+    int mn=INT_MAX;
+    int ind=-1;
+    for(int i=0; i<n; i++)
+    {
+        cin>>a[i];
+        if(a[i]<mn)
+        {
+            mn=a[i];
+            ind=i;
+        }
+    }
+
+    if(is_sorted(a+ind, a+n))
+    {
+        cout<<ind<<endl;
+    }
+    else
+    {
+        cout<<-1<<endl;
+    }
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
