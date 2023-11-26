@@ -1,0 +1,71 @@
+C. Yarik and Array
+
+STATEMENT
+A subarray is a continuous part of array.
+Yarik recently found an array a of n elements and became very interested in finding the maximum sum of 
+a non empty subarray. However, Yarik doesn't like consecutive integers with the same parity, 
+so the subarray he chooses must have alternating parities for adjacent elements. For example, [1,2,3] 
+is acceptable, but [1,2,4] is not, as 2 and 4 are both even and adjacent.
+You need to help Yarik by finding the maximum sum of such a subarray.
+
+SOLUTION
+
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+int mod = 1e9 + 7;
+int md = 998244353;
+
+const int INF = 1e18;
+
+void solve()
+{
+    int n;
+    cin>>n;
+    int a[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>a[i];
+    }
+
+    int ans=INT_MIN;
+    int cur=0;
+    for(int i=0; i<n; i++)
+    {
+        if(i>0 and (abs(a[i-1])%2 == abs(a[i])%2))
+        {
+            cur=a[i];
+            ans=max(ans, cur);
+        }
+        else
+        {
+            cur=max(cur+a[i], a[i]);
+            ans=max(ans, cur);
+        }
+    }
+
+    cout<<ans<<endl;
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
