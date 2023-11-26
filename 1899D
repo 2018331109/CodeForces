@@ -1,0 +1,74 @@
+D. Yarik and Musical Notes
+
+STATEMENT
+Yarik is a big fan of many kinds of music. But Yarik loves not only listening to music but also writing it. 
+He likes electronic music most of all,  so he has created his own system of music notes, which, in his opinion, 
+is best for it. Since Yarik also likes informatics, in his system notes are denoted by integers of 2k, 
+where k≥1 — a positive integer. But, as you know, you can't use just notes to write music, 
+so Yarik uses combinations of two notes. The combination of two notes (a,b), where a=2k and b=2l, 
+he denotes by the integer ab. For example, if a=8=23, b=4=22, then the combination (a,b) is denoted by 
+the integer ab=84=4096. Note that different combinations can have the same notation, e.g., 
+the combination (64,2) is also denoted by the integer 4096=642. Yarik has already chosen n notes that 
+he wants to use in his new melody. However, since their integers can be very large, 
+he has written them down as an array a of length n, then the note i is bi=2ai. The integers in array a can be repeated.
+The melody will consist of several combinations of two notes. Yarik was wondering how many pairs of notes bi,bj
+(i<j) exist such that the combination (bi,bj) is equal to the combination (bj,bi). In other words, 
+he wants to count the number of pairs (i,j) (i<j) such that bbji=bbij. Help him find the number of such pairs.
+
+SOLUTION
+
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+int mod = 1e9 + 7;
+int md = 998244353;
+
+const int INF = 1e18;
+
+void solve()
+{
+    int n;
+    cin>>n;
+    map<int, int>mp;
+    int ans=0;
+    for(int i=0; i<n; i++)
+    {
+        int x;
+        cin>>x;
+        ans+=mp[x];
+        if(x==1)
+        {
+            ans+=mp[2];
+        }
+        if(x==2)
+        {
+            ans+=mp[1];
+        }
+        mp[x]++;
+    }
+
+    cout<<ans<<endl;
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
