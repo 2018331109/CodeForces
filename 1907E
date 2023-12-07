@@ -1,0 +1,57 @@
+E. Good Triples
+
+STATEMENT
+Given a non-negative integer number n (n≥0). Let's say a triple of non-negative integers (a,b,c) is good 
+if a+b+c=n, and digsum(a)+digsum(b)+digsum(c)=digsum(n), where digsum(x) is the sum of digits of number x.
+For example, if n=26, then the pair (4,12,10) is good, because 4+12+10=26, and (4)+(1+2)+(1+0)=(2+6).
+Your task is to find the number of good triples for the given number n. The order of the numbers in a triple matters. 
+For example, the triples (4,12,10) and (10,12,4) are two different triples.
+
+SOLUTION
+
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+int mod = 1e9 + 7;
+int md = 998244353;
+const int INF = 1e18;
+
+void solve()
+{
+    int n;
+    cin>>n;
+    int ans=1;
+    while(n>0)
+    {
+        int nn=n%10;
+        ans*=((nn+1)*(nn+2))/2;
+
+        n/=10;
+    }
+
+    cout<<ans<<endl;
+
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
