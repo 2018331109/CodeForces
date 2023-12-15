@@ -1,0 +1,92 @@
+D. Reverse Madness
+
+STATEMENT
+You are given a string s of length n, containing lowercase Latin letters.
+Next you will be given a positive integer kand two arrays, l and r of length k.
+It is guaranteed that the following conditions hold for these 2 arrays: l1=1; rk=n; li≤ri, for each positive 
+integer i such that 1≤i≤k; li=ri−1+1, for each positive integer i such that 2≤i≤k; 
+Now you will be given a positive integer q which represents the number of modifications you need to do on s.
+Each modification is defined with one positive integer x: Find an index i such that li≤x≤ri (notice that such i
+is unique).Let a=min(x,ri+li−x)and let b=max(x,ri+li−x).
+Reverse the substring of s from index a to index b. Reversing the substring [a,b] of a string s means to make s 
+equal to s1,s2,…,sa−1, sb,sb−1,…,sa+1,sa, sb+1,sb+2,…,sn−1,sn. Print s after the last modification is finished.
+
+SUBMISSION
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+
+int mod = 1e9 + 7;
+int md = 998244353;
+const int INF = 1e18;
+
+void solve()
+{
+    int n, k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    int a[k], b[k];
+    for(int i=0; i<k; i++)
+    {
+        cin>>a[i];
+        a[i]--;
+    }
+    for(int i=0; i<k; i++)
+    {
+        cin>>b[i];
+        b[i]--;
+    }
+
+    int q;
+    cin>>q;
+    int cnt[n+1]= {0};
+    for(int i=0; i<q; i++)
+    {
+        int x;
+        cin>>x;
+        cnt[x-1]++;
+    }
+
+    string ans="";
+    for(int i=0; i<k; i++)
+    {
+        string ss=s.substr(a[i], b[i]-a[i]+1);
+        int sum=0;
+        int l=a[i], r=b[i];
+
+        for(int j=l; j<=(l+r)/2; j++)
+        {
+            sum+=cnt[j]+cnt[r+l-j];
+            if(sum%2)
+            {
+                swap(ss[j-l], ss[r-j]);
+            }
+        }
+        ans+=ss;
+    }
+    cout<<ans<<endl;
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
