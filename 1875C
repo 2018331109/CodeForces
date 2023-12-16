@@ -1,0 +1,73 @@
+C. Jellyfish and Green Apple
+
+STATEMENT
+Jellyfish has n green apple pieces. Each green apple piece weighs 1 kg. Jellyfish wants to divide these green 
+apple pieces equally among m people. Jellyfish has a magic knife. Each time Jellyfish can choose one piece of green apple 
+and divide it into two smaller pieces, with each piece having half the weight of the original piece.
+Jellyfish wants to know the minimum number of operations needed such that she can divide the green apple pieces 
+such that the total weight of apple pieces received by each person is the same.
+
+SUBMISSION
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+
+int mod = 1e9 + 7;
+int md = 998244353;
+const int INF = 1e18;
+
+void solve()
+{
+    int n, m;
+    cin>>n>>m;
+
+    int rm=n%m;
+    int gc=__gcd(n, m);
+
+    int d=m/gc;
+
+    if(__builtin_popcount(d) > 1)
+    {
+        neg;
+        return;
+    }
+
+    int ans=0;
+
+    while(rm)
+    {
+        //cout<<rm<<endl;
+        ans+=rm;
+        rm*=2;
+        if(rm>=m)
+        {
+            rm-=m;
+        }
+    }
+
+    cout<<ans<<endl;
+
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
