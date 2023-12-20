@@ -1,0 +1,80 @@
+E2. Game with Marbles (Hard Version)
+
+SUBMISSION
+C++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define yes cout << "Yes" << endl;
+#define no cout << "No" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+#define sc second
+#define fs first
+
+int mod = 1e9 + 7;
+int md = 998244353;
+const int INF = 1e18;
+
+void solve()
+{
+    int n;
+    cin>>n;
+    int a[n];
+    int b[n];
+    int ab[n];
+    for(int i=0; i<n; i++)
+    {
+        cin>>a[i];
+    }
+    for(int i=0; i<n; i++)
+    {
+        cin>>b[i];
+    }
+
+    vector<pair<int, int>>v;
+
+    for(int i=0; i<n; i++)
+    {
+        int x=a[i]+b[i];
+        v.pb({x, i});
+    }
+
+    sort(v.begin(), v.end());
+    int alice=0, bob=0;
+
+    int f=0;
+    for(int i=n-1; i>=0; i--)
+    {
+        if(!f)
+        {
+            alice+=a[v[i].sc]-1;
+        }
+        else
+        {
+            bob+=b[v[i].sc]-1;
+        }
+        f^=1;
+
+    }
+
+    cout<<alice-bob<<endl;
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
