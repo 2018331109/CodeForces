@@ -1,0 +1,120 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+#define yes cout << "YES" << endl;
+#define no cout << "NO" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+#define ss second
+#define ff first
+const int INF = 1e18;
+const int md = 998244353;
+const int mod = 1e9 + 7;
+const int N = 200005;
+
+void solve()
+{
+    string a, b;
+    cin>>a>>b;
+    int n=a.size();
+    a="#"+a, b="#"+b;
+
+    vector<bool>problem(n+2, false);
+    int cnt=0;
+
+    queue<pair<int, int>>q;
+
+    for(int i=1; i<=n; i++)
+    {
+        if(a[i]!=b[i])
+        {
+            cnt++;
+            problem[i]=true;
+        }
+    }
+
+    int time, cases;
+    cin>>time>>cases;
+    for(int i=1; i<=cases; i++)
+    {
+        while (!q.empty() && i - q.front().second >= time)
+        {
+            q.pop();
+            cnt++;
+        }
+        int type;
+        cin>>type;
+        if(type==3)
+        {
+            cout<<(cnt==0? "YES": "NO")<<endl;
+            continue;
+        }
+        if(type==2)
+        {
+            int x, p1;
+            cin>>x>>p1;
+            int y, p2;
+            cin>>y>>p2;
+            if(x==y)
+            {
+                (x==1)?swap(a[p1], a[p2]):swap(b[p1], b[p2]);
+            }
+            else
+            {
+                (x==1)?swap(a[p1], b[p2]):swap(a[p2], b[p1]);
+            }
+
+
+            if(problem[p1])
+            {
+                cnt--;
+            }
+            if(problem[p2])
+            {
+                cnt--;
+            }
+            problem[p1]=false, problem[p2]=false;
+
+
+            if(a[p1]!=b[p1])
+            {
+                problem[p1]=true;
+                cnt++;
+            }
+            if(a[p2]!=b[p2])
+            {
+                problem[p2]=true;
+                cnt++;
+            }
+
+        }
+        else
+        {
+            int p;
+            cin>>p;
+            if(problem[p])
+            {
+                cnt--;
+                q.push({p, i});
+            }
+        }
+    }
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
+
