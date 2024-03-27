@@ -1,0 +1,97 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long int
+#define yes cout << "YES" << endl;
+#define no cout << "NO" << endl;
+#define neg cout << -1 << endl;
+#define pb push_back
+#define ss second
+#define ff first
+const int INF = 1e18;
+const int md = 998244353;
+const int mod = 1e9 + 7;
+const int N = 200005;
+vector<int> g[N];
+vector<int> color(N, -1);
+int f = 0, n = 0;
+
+void dfs(int i)
+{
+    int j, sz = g[i].size();
+
+    for (j = 0; j < sz; j++)
+    {
+        if (color[g[i][j]] == -1)
+        {
+            color[g[i][j]] = 1 - color[i];
+            dfs(g[i][j]);
+        }
+        else if (color[i] == color[g[i][j]])
+        {
+            f++;
+            break;
+        }
+    }
+}
+
+void solve()
+{
+
+    cin >> n;
+    for (int i = 0; i <= n; i++)
+    {
+        g[i].clear();
+        color[i] = -1;
+    }
+    f = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        int a, b;
+        cin >> a >> b;
+        g[a].pb(b);
+        g[b].pb(a);
+        if (g[a].size() > 2 or g[b].size() > 2)
+        {
+            f = 1;
+        }
+    }
+    if (f)
+    {
+        no;
+        return;
+    }
+    for (int i = 1; i <= n and f == 0; i++)
+    {
+        if (color[i] == -1)
+        {
+            color[i] = 0;
+            dfs(i);
+        }
+    }
+
+    if (!f)
+    {
+        yes;
+        return;
+    }
+    no;
+
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int test = 1;
+    cin >> test;
+
+    for (int tc = 1; tc <= test; tc++)
+    {
+        solve();
+    }
+
+    return 0;
+}
